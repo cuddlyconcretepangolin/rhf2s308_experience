@@ -126,6 +126,21 @@ rsync -av --info=progress2 user@192.168.0.333:/home/user/miner_data/ /opt/helium
 8) The hot spot should now only be several minutes behind (however long the copy operation took). 
 
 
+The nice thing about this solution is that now I have another miner running on Computer B (that I will just allow to continue running so it's always in sync), and I can copy over the blockchain if it ever falls behind again, or if I need to flash firmware in the future.
+
+
+
+
+#
+#
+#
+#
+#
+#
+#
+
+
+
 
 
 
