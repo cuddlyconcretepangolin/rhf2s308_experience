@@ -126,10 +126,19 @@ rsync -av --info=progress2 user@192.168.0.333:/home/user/miner_data/ /opt/helium
 
 The nice thing about this solution is that now I have another miner running on Computer B (that I will just allow to continue running so it's always in sync), and I can copy over the blockchain if it ever falls behind again, or if I need to resync firmware in the future.
 
+# Migrating to Light Hotspots
+RisingHF has avoided answering whether they have been testing the firmware for the migration to Light Hotspots, scheduled for May 2022. For this reason, I have upgraded the miner manually.  We will update the docker-compose.yaml to pull the updated miner images from Helium. First, though, we must disable RisingHF's agent services that will overwrite our changes.  I do not know why there are two of these, but I disabled them both and have not experienced any troubles:
+
+```bash
+systemctl stop agent-upgrade2
+systemctl mask agent-upgrade2
+
+systemctl stop agent
+systemctl mask agent
+```
 
 
 
-#
 #
 #
 #
