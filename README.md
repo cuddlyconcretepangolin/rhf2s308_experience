@@ -136,15 +136,24 @@ systemctl mask agent-upgrade2
 systemctl stop agent
 systemctl mask agent
 ```
+Now we will edit `/opt/helium/docker-compose.yaml` and change the two references to the helium miner image to be consistent with the most recent miner release from https://quay.io/repository/team-helium/miner?tab=tags. At time of writing, this is `2022.04.27.0`.
 
+There are two references: one in the `image:` line, and one in the `volumes:` section (for the sys.config).
 
+Once this file has been updated, we need to ensure we are in the same directory as this file, and then build the new miner:
+
+```bash
+cd /opt/helium/
+docker-compose up -d
+```
+
+Once it's finished, verify that the new version is active by running
+
+```bash 
+docker exec miner miner versions
+```
+
+*Note that doing this will prevent you from receiving future OTA (over the wire?) miner updates.  My plan is to keep it like this for a while until after the official migration and see how it plays out.  Then once it seems like RisingHF is on top of everything again, I will enable the agent again. *
 
 #
-#
-#
-#
-#
-#
 
-
-`HNT: 14LxUtbb6SgpYMxXJESSzKsppPqThoJHh7dFXKZmyCni1N5spKZ`
