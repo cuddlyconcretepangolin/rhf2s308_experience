@@ -127,7 +127,7 @@ rsync -av --info=progress2 user@192.168.0.333:/home/user/miner_data/ /opt/helium
 The nice thing about this solution is that now I have another miner running on Computer B (that I will just allow to continue running so it's always in sync), and I can copy over the blockchain if it ever falls behind again, or if I need to resync firmware in the future.
 
 # Migrating to Light Hotspots
-RisingHF has avoided answering whether they have been testing the firmware for the migration to Light Hotspots, scheduled for May 2022. For this reason, I have upgraded the miner manually.  We will update the docker-compose.yaml to pull the updated miner images from Helium. First, though, we must disable RisingHF's agent services that will overwrite our changes.  I do not know why there are two of these, but I disabled them both and have not experienced any troubles:
+During the update to light Hotspots, several patches have been released to improve POC. RisingHF has not pushed these updates (to be fair, I have only given them hours to do so...this is admittedly unreasonable expectations on my part).  Nonetheless, I have upgraded my miner manually by updating the docker-compose.yaml to pull the updated miner images from Helium. First, though, we must disable RisingHF's agent services that will overwrite our changes.  I do not know why there are two of these, but I disabled them both and have not experienced any troubles:
 
 ```bash
 systemctl stop agent-upgrade2
@@ -136,7 +136,7 @@ systemctl mask agent-upgrade2
 systemctl stop agent
 systemctl mask agent
 ```
-Now we will edit `/opt/helium/docker-compose.yaml` and change the two references to the helium miner image to be consistent with the most recent miner release from https://quay.io/repository/team-helium/miner?tab=tags. At time of writing, this is `2022.04.27.0`.
+Now we will edit `/opt/helium/docker-compose.yaml` and change the two references to the helium miner image to be consistent with the most recent miner release from https://quay.io/repository/team-helium/miner?tab=tags. At time of writing, this is `2022.05.11.0`.
 
 There are two references: one in the `image:` line, and one in the `volumes:` section (for the sys.config).
 
@@ -153,7 +153,7 @@ Once it's finished, verify that the new version is active by running
 docker exec miner miner versions
 ```
 
-*Note that doing this will prevent you from receiving future OTA (over the wire?) miner updates.  My plan is to keep it like this for a while until after the official migration and see how it plays out.  Then once it seems like RisingHF is on top of everything again, I will enable the agent again. *
+*Note that doing this (more specifically disabling the agent services) will prevent you from receiving future OTA (over the wire?) miner updates.  My plan is to keep it like this for a while until after the official migration and see how it plays out.  Then once it seems like RisingHF is on top of everything again, I will enable the agent again. *
 
 #
 
